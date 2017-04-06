@@ -1,6 +1,8 @@
 
-
-Include a README.md file that outlines: 
+TheBestTeam- Project1
+Taylor M., Elias, Dan N., Sigrunn, Chia Lo
+----------------------------------------------------------
+ <br />
  <br />
 Information about your visualizations and what they show. 
  <br />
