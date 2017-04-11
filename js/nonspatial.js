@@ -16,6 +16,10 @@ function checkDataset(dataset) {
 
 d3.csv( 'data/ZayoHackathonData_Buildings.csv', function( csvDataBuilding ){
   var dataBuilding = csvDataBuilding
+
+  // TODO: remove this line once data is properly filtered
+  dataBuilding = _.sampleSize( dataBuilding, 10 );
+
   var width = 1000;
   var height = 650;
   var xOffset = 150;
@@ -29,9 +33,6 @@ d3.csv( 'data/ZayoHackathonData_Buildings.csv', function( csvDataBuilding ){
   var buildingArr = _.map( dataBuilding, function( d ){
     return d['Building ID'];
   } );
-
-  // TODO: remove this line once data is properly filtered
-  buildingArr = _.take( buildingArr, 10 );
 
   // Create svg to contain vis
   var svg = d3.select( '#nonspatial' ).append( 'svg:svg' )
@@ -50,7 +51,7 @@ d3.csv( 'data/ZayoHackathonData_Buildings.csv', function( csvDataBuilding ){
 
   var yScale = d3.scale.ordinal()
                 .domain( buildingArr )
-                .rangeRoundBands([0, height - yOffset], .1);
+                .rangeRoundBands([0, height - yOffset], .5);
 
   // Create axes
   var xAxis = d3.svg.axis()
@@ -73,13 +74,13 @@ d3.csv( 'data/ZayoHackathonData_Buildings.csv', function( csvDataBuilding ){
 
   // Create bar elements & bind data to elements
   var bar = svg.selectAll( '.bar' )
-               .data( data );
+               .data( dataBuilding );
   bar.enter().append( 'svg:rect' );
   bar.attr( 'class', 'bar' )
-     .attr( 'height', 10 )
+     .attr( 'height', yScale.rangeBand )
      .attr( 'width', function( d ){ return xScale(d['Estimated Build Cost']); } )
-     .attr( 'x', function( d ){ return xScale(d['Estimated Build Cost']); } )
+     .attr( 'x', function(){ return xOffset; } )
      .attr( 'y', function( d ){ return yScale(d['Building ID']); } )
   bar.append( 'svg:title' )
-      .text(function( d ){ return d['x'] });
+      .text(function( d ){ return d['Building ID'] });
 } );
