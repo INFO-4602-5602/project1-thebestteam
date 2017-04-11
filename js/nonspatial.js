@@ -14,11 +14,8 @@ function checkDataset(dataset) {
         $("#dataCheck").append("<p>Data loaded incorrectly. Try using the debugger to help you find the bug!</p>");
 }
 
-d3.csv( 'data/ZayoHackathonData_Buildings.csv', function( csvDataBuilding ){
-  var dataBuilding = csvDataBuilding
-
-  // TODO: remove this line once data is properly filtered
-  dataBuilding = _.sampleSize( dataBuilding, 10 );
+d3.csv( 'data/ZayoHackathonData_CPQs.csv', function( csvDataCPQ ){
+  var dataCPQ = csvDataCPQ
 
   var width = 1000;
   var height = 650;
@@ -27,11 +24,17 @@ d3.csv( 'data/ZayoHackathonData_Buildings.csv', function( csvDataBuilding ){
   var margin = 10;
 
   // Filtered By
-  // Is Closed: false
-  // Is Won:    false
-  // Stage Name:: 1 & 2
-  var buildingArr = _.map( dataBuilding, function( d ){
-    return d['Building ID'];
+  // State: CO
+  // On Zayo Network Status: Not on Zayo Network
+  dataCPQ = _.filter( dataCPQ, function( d ){
+    return d['State'] === 'CO' && d['X36 NPV List'] !== ' $-   ';
+  } );
+
+  // TODO: remove this line once data is properly filtered
+  dataCPQ = _.sampleSize( dataCPQ, 10 );
+
+  dataCPQArr = _.map( dataCPQ, function( d ){
+    return d['Building ID']
   } );
 
   // Create svg to contain vis
@@ -41,16 +44,16 @@ d3.csv( 'data/ZayoHackathonData_Buildings.csv', function( csvDataBuilding ){
 
   // Define axes scale
   var xScale = d3.scale.linear()
-                 .domain( [d3.min( dataBuilding, function( d ){
-                          return parseFloat( d['Estimated Build Cost'] );
-                        } )-1, d3.max( dataBuilding, function( d ){
-                          return parseFloat( d['Estimated Build Cost'] );
+                 .domain( [d3.min( dataCPQ, function( d ){
+                          return parseFloat( d['X36 NPV List'] );
+                        } )-1, d3.max( dataCPQ, function( d ){
+                          return parseFloat( d['X36 NPV List'] );
                         } )+1] )
                  .range( [xOffset, width - margin] );
 
 
   var yScale = d3.scale.ordinal()
-                .domain( buildingArr )
+                .domain( dataCPQArr )
                 .rangeRoundBands([0, height - yOffset], .5);
 
   // Create axes
@@ -66,7 +69,7 @@ d3.csv( 'data/ZayoHackathonData_Buildings.csv', function( csvDataBuilding ){
   var yAxis = d3.svg.axis()
                     .scale( yScale )
                     .orient( 'left' )
-                    .ticks( buildingArr.length );
+                    .ticks( dataCPQArr.length );
   var yAxisG = svg.append( 'g' )
                   .attr( 'class', 'axis' )
                   .attr( 'transform', 'translate(' + (xOffset) + ')' )
@@ -74,11 +77,11 @@ d3.csv( 'data/ZayoHackathonData_Buildings.csv', function( csvDataBuilding ){
 
   // Create bar elements & bind data to elements
   var bar = svg.selectAll( '.bar' )
-               .data( dataBuilding );
+               .data( dataCPQ );
   bar.enter().append( 'svg:rect' );
   bar.attr( 'class', 'bar' )
      .attr( 'height', yScale.rangeBand )
-     .attr( 'width', function( d ){ return xScale(d['Estimated Build Cost']); } )
+     .attr( 'width', function( d ){ return xScale(d['X36 NPV List']); } )
      .attr( 'x', function(){ return xOffset; } )
      .attr( 'y', function( d ){ return yScale(d['Building ID']); } )
   bar.append( 'svg:title' )
