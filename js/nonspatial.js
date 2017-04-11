@@ -20,7 +20,7 @@ d3.csv( 'data/ZayoHackathonData_CPQs.csv', function( csvDataCPQ ){
   var width = 1000;
   var height = 650;
   var xOffset = 150;
-  var yOffset = 30;
+  var yOffset = 20;
   var margin = 10;
 
   // Filtered By
@@ -50,11 +50,9 @@ d3.csv( 'data/ZayoHackathonData_CPQs.csv', function( csvDataCPQ ){
                           return parseFloat( d['X36 NPV List'] );
                         } )+1] )
                  .range( [xOffset, width - margin] );
-
-
   var yScale = d3.scale.ordinal()
                 .domain( dataCPQArr )
-                .rangeRoundBands([0, height - yOffset], .5);
+                .rangeRoundBands([0, height], 0.7);
 
   // Create axes
   var xAxis = d3.svg.axis()
@@ -63,23 +61,33 @@ d3.csv( 'data/ZayoHackathonData_CPQs.csv', function( csvDataCPQ ){
                     .ticks( 5 );
   var xAxisG = svg.append( 'g' )
                   .attr( 'class', 'axis' )
-                  .attr( 'transform', 'translate(0, ' + (height - yOffset - 6) + ')' )
+                  .attr( 'transform', 'translate(0, ' + (height - yOffset) + ')' )
                   .call( xAxis );
 
   var yAxis = d3.svg.axis()
                     .scale( yScale )
-                    .orient( 'left' )
-                    .ticks( dataCPQArr.length );
+                    .orient( 'left' );
   var yAxisG = svg.append( 'g' )
                   .attr( 'class', 'axis' )
                   .attr( 'transform', 'translate(' + (xOffset) + ')' )
                   .call( yAxis );
 
   // Create bar elements & bind data to elements
+  console.log(dataCPQ)
   var bar = svg.selectAll( '.bar' )
                .data( dataCPQ );
   bar.enter().append( 'svg:rect' );
-  bar.attr( 'class', 'bar' )
+  bar.attr( 'class', function( d ){
+        if( d === 'On Zayo Network' ){
+          return 'barOn'
+        }
+        else if( d === 'Not on Zayo Network' ){
+          return 'barOff';
+        }
+        else {
+          return 'barBuild';
+        }
+      })
      .attr( 'height', yScale.rangeBand )
      .attr( 'width', function( d ){ return xScale(d['X36 NPV List']); } )
      .attr( 'x', function(){ return xOffset; } )
