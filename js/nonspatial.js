@@ -94,6 +94,9 @@ d3.csv( 'data/ZayoHackathonData_CPQs.csv', function( csvDataCPQ ){
                   .attr( 'class', 'axis' )
                   .attr( 'transform', 'translate(' + (xOffset) + ')' )
                   .call( yAxis );
+  var title = d3.select("#title").append("text")
+                .style("font-size", "40px")
+                .text("Possible Revenue per Building");
 
   // Create bar elements & bind data to elements
   var bar = svg.selectAll( '.bar' )
