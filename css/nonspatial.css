@@ -5,7 +5,15 @@
     shape-rendering: crispEdges;
 }
 
-.bar {
+.barBuild {
   fill: #00c49f;
+  stroke: none;
+}
+.barON {
+  fill: ##ff0000;
+  stroke: none;
+}
+.barOff {
+  fill: ##ff0990;
   stroke: none;
 }
