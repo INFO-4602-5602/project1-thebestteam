@@ -73,15 +73,14 @@ d3.csv( 'data/ZayoHackathonData_CPQs.csv', function( csvDataCPQ ){
                   .call( yAxis );
 
   // Create bar elements & bind data to elements
-  console.log(dataCPQ)
   var bar = svg.selectAll( '.bar' )
                .data( dataCPQ );
   bar.enter().append( 'svg:rect' );
   bar.attr( 'class', function( d ){
-        if( d === 'On Zayo Network' ){
+        if( d['On Zayo Network Status'] === 'On Zayo Network' ){
           return 'barOn'
         }
-        else if( d === 'Not on Zayo Network' ){
+        else if( d['On Zayo Network Status'] === 'Not on Zayo Network' ){
           return 'barOff';
         }
         else {
@@ -93,5 +92,5 @@ d3.csv( 'data/ZayoHackathonData_CPQs.csv', function( csvDataCPQ ){
      .attr( 'x', function(){ return xOffset; } )
      .attr( 'y', function( d ){ return yScale(d['Building ID']); } )
   bar.append( 'svg:title' )
-      .text(function( d ){ return d['Building ID'] });
+      .text(function( d ){ return d['On Zayo Network Status'] });
 } );

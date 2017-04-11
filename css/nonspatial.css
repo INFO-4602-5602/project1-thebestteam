@@ -6,14 +6,14 @@
 }
 
 .barBuild {
-  fill: #00c49f;
+  fill: #fef65b;
   stroke: none;
 }
-.barON {
-  fill: ##ff0000;
+.barOn {
+  fill: #66de9a;
   stroke: none;
 }
 .barOff {
-  fill: ##ff0990;
+  fill: #ff8c69;
   stroke: none;
 }
