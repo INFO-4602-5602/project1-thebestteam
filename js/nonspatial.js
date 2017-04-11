@@ -17,7 +17,7 @@ function checkDataset(dataset) {
 d3.csv( 'data/ZayoHackathonData_CPQs.csv', function( csvDataCPQ ){
   var dataCPQ = csvDataCPQ
 
-  var width = 1000;
+  var width = 1200;
   var height = 650;
   var xOffset = 150;
   var yOffset = 20;
@@ -44,12 +44,10 @@ d3.csv( 'data/ZayoHackathonData_CPQs.csv', function( csvDataCPQ ){
 
   // Define axes scale
   var xScale = d3.scale.linear()
-                 .domain( [d3.min( dataCPQ, function( d ){
-                          return parseFloat( d['X36 NPV List'] );
-                        } )-1, d3.max( dataCPQ, function( d ){
+                 .domain( [0, d3.max( dataCPQ, function( d ){
                           return parseFloat( d['X36 NPV List'] );
                         } )+1] )
-                 .range( [xOffset, width - margin] );
+                 .range( [xOffset, width] );
   var yScale = d3.scale.ordinal()
                 .domain( dataCPQArr )
                 .rangeRoundBands([0, height], 0.7);
@@ -88,9 +86,9 @@ d3.csv( 'data/ZayoHackathonData_CPQs.csv', function( csvDataCPQ ){
         }
       })
      .attr( 'height', yScale.rangeBand )
-     .attr( 'width', function( d ){ return xScale(d['X36 NPV List']); } )
+     .attr( 'width', function( d ){ return xScale(d['X36 NPV List']) - xOffset; } )
      .attr( 'x', function(){ return xOffset; } )
      .attr( 'y', function( d ){ return yScale(d['Building ID']); } )
   bar.append( 'svg:title' )
-      .text(function( d ){ return d['On Zayo Network Status'] });
+      .text(function( d ){ return d['X36 NPV List'] });
 } );
