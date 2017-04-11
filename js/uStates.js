@@ -31,7 +31,7 @@ d3.csv("data/ZayoHackathonData_Buildings.csv", function(error, data) {
 ////////////////////////////
 
 
-var map = L.map('map').setView([39.74739, -105], 13);
+var map = L.map('map').setView([39.74739, -105], 8);
 
     L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
         maxZoom: 18,
@@ -68,6 +68,16 @@ var map = L.map('map').setView([39.74739, -105], 13);
     }
 };
     L.geoJSON(zayo).addTo(map);    
+
+
+    var hayo = {
+    "type": "Feature",
+    "geometry": {
+        "type": "Point",
+        "coordinates": [data[4].Longitude, data[4].Latitude]
+    }
+};
+    L.geoJSON(hayo).addTo(map);        
 
 
 });
