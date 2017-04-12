@@ -1,13 +1,22 @@
 //Reading in the data
 var data;
+var ProductData = [];
 d3.csv( 'data/ZayoHackathonData_Buildings.csv', function( csvData ){
   data = csvData;
   checkDataset( data );
 });
-d3.csv( 'data/ZayoHackathonData_Accounts.csv', function( csvData ){
+d3.csv( 'data/ZayoHackathonData_CPQs.csv', function( csvData ){
   data = csvData;
   checkDataset( data );
+    data.map(function(d){
+        if (d.State == "CO"){
+            ProductData.push(d["Product Group"]);
+        }
+    })
 });
+
+console.log("product group:", ProductData);
+
 function checkDataset(dataset) {
     if (dataset.length > 0)
         $("#dataCheck").append("<p>Data loaded correctly!</p>");
@@ -19,6 +28,7 @@ function checkDataset(dataset) {
 var LongData = [];
 var LatiData = [];
 
+
 d3.csv("data/ZayoHackathonData_Buildings.csv", function(error, data) {
     data.map(function(d){
         if (d.State == "CO"){
@@ -26,13 +36,13 @@ d3.csv("data/ZayoHackathonData_Buildings.csv", function(error, data) {
             LatiData.push(+d.Latitude);
         }
     })
-    console.log("Long: ", LongData);
-    console.log("Lati: ", LatiData);
+   // console.log("Long: ", LongData);
+   // console.log("Lati: ", LatiData);
 
 ////////////////////////////
 
 
-var map = L.map('map').setView([39.75621, -104.99404], 14);
+var map = L.map('map').setView([39.75621, -104.99404], 11);
     // Set up map box
     L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
         maxZoom: 18,
@@ -45,13 +55,73 @@ var map = L.map('map').setView([39.75621, -104.99404], 14);
     
  
     for (i = 1; i < 500; i++){
-        L.circle([LatiData[i],LongData[i]], {radius:100}).addTo(map);
+        
+        if (ProductData[i] == "Ethernet"){
+            L.circle([LatiData[i],LongData[i]], 60, {
+		color: 'red',
+		fillColor: 'red',
+		fillOpacity: 1
+	}).addTo(map).bindPopup(ProductData[i]);
+        }
+        
+        if (ProductData[i] == "IP Services"){
+            L.circle([LatiData[i],LongData[i]], 60, {
+		color: 'green',
+		fillColor: 'green',
+		fillOpacity: 1
+	}).addTo(map).bindPopup(ProductData[i]);
+        }
+        
+        if (ProductData[i] == "Wavelengths - Metro"){
+            L.circle([LatiData[i],LongData[i]], 60, {
+		color: 'orange',
+		fillColor: 'orange',
+		fillOpacity: 1
+	}).addTo(map).bindPopup(ProductData[i]);
+        }
+        
+        if (ProductData[i] == "zColo"){
+            L.circle([LatiData[i],LongData[i]], 60, {
+		color: 'blue',
+		fillColor: 'blue',
+		fillOpacity: 1
+	}).addTo(map).bindPopup(ProductData[i]);
+        }
+        
+        if (ProductData[i] == "Wavelengths - Long Haul"){
+            L.circle([LatiData[i],LongData[i]], 60, {
+		color: 'purple',
+		fillColor: 'purple',
+		fillOpacity: 1
+	}).addTo(map).bindPopup(ProductData[i]);
+        }
+        
+         if (ProductData[i] == "Dark Fiber - Metro"){
+            L.circle([LatiData[i],LongData[i]], 60, {
+		color: 'black',
+		fillColor: 'black',
+		fillOpacity: 1
+	}).addTo(map).bindPopup(ProductData[i]);
+        }
+        
+        if (ProductData[i] == "SONET"){
+            L.circle([LatiData[i],LongData[i]], 60, {
+		color: 'Yellow',
+		fillColor: 'Yellow',
+		fillOpacity: 1
+	}).addTo(map).bindPopup(ProductData[i]);
+        }
+        
+        
+        
+       // L.circle([LatiData[i],LongData[i]], {radius:100}).addTo(map).bindPopup(ProductData[i]);
+      //  L.circle([LatiData[i],LongData[i]], {radius:100}).addTo(map).bindPopup(ProductData[i]);
 
         var building = {
             "Latitude": data[i].Latitude,
             "Longitude": data[i].Longitude
         }   
-        console.log(building)
+      //  console.log(building)
         
 
         
@@ -82,7 +152,7 @@ var map = L.map('map').setView([39.75621, -104.99404], 14);
 //	}).addTo(map).bindPopup("I am a circle.");
 
     // Coors Field Single Point
-    var Coors = {
+   /* var Coors = {
         "type": "Feature",
         "geometry": {
             "type": "Point",
@@ -114,7 +184,7 @@ var map = L.map('map').setView([39.75621, -104.99404], 14);
     
 
   
-
+*/
     
 
 
