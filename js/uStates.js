@@ -57,7 +57,7 @@ var map = L.map('map').setView([39.75621, -104.99404], 14);
 //            fillOpacity: 0.5
 //        }).addTo(map).bindPopup("I am a circle.");
         
-        var Coors = {
+        var plotBuildings = {
             "type": "Feature",
             "geometry": {
                 "type": "Point",
@@ -65,12 +65,16 @@ var map = L.map('map').setView([39.75621, -104.99404], 14);
         }
         };
         L.geoJSON(Coors).addTo(map);
-
+        
+        L.circle([LongData[i], LatiData[i]], {radius: 200}).addTo(map);
+        
 
     }
 
-    
-    
+    // Inner Circle around Coors
+    L.circle([39.75621, -104.99404], {radius: 200}).addTo(map);
+
+    // Red Circle Around Coors
     L.circle([39.75621, -104.99404], 500, {
 		color: 'red',
 		fillColor: 'red',
