@@ -17,3 +17,12 @@
   fill: #ff8c69;
   stroke: none;
 }
+
+#legend{
+	vertical-align:top;
+	display: inline-block;
+}
+
+#nonspacial{
+	display: inline-block
+}
