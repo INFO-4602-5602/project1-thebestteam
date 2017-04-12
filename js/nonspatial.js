@@ -119,9 +119,11 @@ d3.csv( 'data/ZayoHackathonData_CPQs.csv', function( csvDataCPQ ){
         }
       })
      .attr( 'height', yScale.rangeBand )
+     .on("click", function(d) {d3.select("#info").text("( "+d['Building ID']+", $"+ d['X36 NPV List']+" )").style("font-size", "30px"); })
      .attr( 'width', function( d ){ return xScale(d['X36 NPV List']) - xOffset; } )
      .attr( 'x', function(){ return xOffset; } )
      .attr( 'y', function( d ){ return yScale(d['Building ID']); } )
   bar.append( 'svg:title' )
       .text(function( d ){ return d['On Zayo Network Status'] });
+
 } );
