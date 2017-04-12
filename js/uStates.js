@@ -64,7 +64,7 @@ var map = L.map('map').setView([39.75621, -104.99404], 14);
                 "coordinates": [LongData[i], LatiData[i]]
         }
         };
-        L.geoJSON(Coors).addTo(map);
+        L.geoJSON(plotBuildings).addTo(map);
         
         L.circle([LongData[i], LatiData[i]], {radius: 200}).addTo(map);
         
