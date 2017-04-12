@@ -1,9 +1,13 @@
 // Constants
+ 
+
+
   var width = 1200;
   var height = 650;
   var xOffset = 150;
   var yOffset = 20;
-  var margin = 10;
+  var margin = 20;
+  var padding =10;
     
 // Load CSV
 var data;
@@ -45,19 +49,21 @@ d3.csv( 'data/ZayoHackathonData_CPQs.csv', function( csvDataCPQ ){
   dataCPQ = _.mapKeys( dataCPQ, function( d ){
     return d['Building ID'];
   } );
-
+  
   // sums NPVs across unique buildings
   uniqueBuildingNPVs = _(dataCPQ)
             .groupBy('Building ID')
             .map( (val, key) => ({
+
               'Building ID': key,
               'On Zayo Network Status': _.result(val[0], 'On Zayo Network Status'),
-              'X36 NPV List': _.sumBy( val, 'X36 NPV List')
+              'X36 NPV List': _.sumBy( val, 'X36 NPV List'),
+              'Account': _.countBy(val, 'Account ID')
             })).value();
 
   // TODO: remove this line once data is properly filtered
-  uniqueBuildingNPVs = _.sampleSize( uniqueBuildingNPVs, 10 );
-
+  uniqueBuildingNPVs = _.sampleSize( uniqueBuildingNPVs, 20 );
+console.log(uniqueBuildingNPVs);
   // Create svg to contain vis
   var svg = d3.select( '#nonspatial' ).append( 'svg:svg' )
                                       .attr( 'width', width )
@@ -75,9 +81,10 @@ d3.csv( 'data/ZayoHackathonData_CPQs.csv', function( csvDataCPQ ){
   uniqueBuildingArr = _.map( uniqueBuildingNPVs, function( d ){
    return d['Building ID']
   } );
+  console.log(uniqueBuildingArr);
   var yScale = d3.scale.ordinal()
                 .domain( uniqueBuildingArr )
-                .rangeRoundBands([0, height], 0.7);
+                .rangeRoundBands([0, height], .1, .6);
 
   // Create axes
   var xAxis = d3.svg.axis()
@@ -86,7 +93,7 @@ d3.csv( 'data/ZayoHackathonData_CPQs.csv', function( csvDataCPQ ){
                     .ticks( 5 );
   var xAxisG = svg.append( 'g' )
                   .attr( 'class', 'axis' )
-                  .attr( 'transform', 'translate(0, ' + (height-yOffset -1) + ')' )
+                  .attr( 'transform', 'translate(0, ' + (height-yOffset-1) + ')' )
                   .call( xAxis );
 
   var yAxis = d3.svg.axis()
@@ -126,15 +133,13 @@ d3.csv( 'data/ZayoHackathonData_CPQs.csv', function( csvDataCPQ ){
      .attr( 'x', function(){ return xOffset; } )
      .attr( 'y', function( d ){ return yScale(d['Building ID']); } )
      .on("click", function(d) {d3.select("#info")
-        .attr("dy", "0em")
         .text(" Building ID: "+d['Building ID']+", Possible Revenue According to CPQ NPV: $"+ d['X36 NPV List']).style("font-size", "30px");
         })
-       
-     .on("mouseover", function(d) {d3.select(this).attr("height", 25); }) 
-     .on("mouseout", function(d) {d3.select(this).attr("height", 19 ) ; }) 
-
+    
   bar.append( 'svg:title' )
       .text(function( d ){ return d['On Zayo Network Status'] });
+
+
 
 } );
 
