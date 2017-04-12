@@ -127,11 +127,11 @@ d3.csv( 'data/ZayoHackathonData_CPQs.csv', function( csvDataCPQ ){
      .attr( 'y', function( d ){ return yScale(d['Building ID']); } )
      .on("click", function(d) {d3.select("#info")
         .attr("dy", "0em")
-        .text(" Building ID: "+d['Building ID']+" Possible Revenue According to CPQ NPV: $"+ d['X36 NPV List']+" )").style("font-size", "30px");
+        .text(" Building ID: "+d['Building ID']+", Possible Revenue According to CPQ NPV: $"+ d['X36 NPV List']).style("font-size", "30px");
         })
        
-     .on("mouseover", function(d) {d3.select(this).attr("height", 25); } ) //mouseover changes attribute "r", radius and changes fill to a darker red.
-     .on("mouseout", function(d) {d3.select(this).attr("height", 19 ) ; } ) //mouseover changes attribute "r", radius and changes fill to a darker red.
+     .on("mouseover", function(d) {d3.select(this).attr("height", 25); }) 
+     .on("mouseout", function(d) {d3.select(this).attr("height", 19 ) ; }) 
 
   bar.append( 'svg:title' )
       .text(function( d ){ return d['On Zayo Network Status'] });
