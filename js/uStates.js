@@ -137,9 +137,9 @@ var map = L.map('map').setView([39.75621, -104.99404], 11);
 
     }
 
-    var testArray = [39.905974, -104.999076];
+   // var testArray = [39.905974, -104.999076];
     
-    L.circle([LatiData[0],LongData[0]], {radius:400}).addTo(map);
+   // L.circle([LatiData[0],LongData[0]], {radius:400}).addTo(map);
     // Inner Circle around Coors
 //    L.circle([39.905974, -104.999076], {radius: 100}).addTo(map);
 
