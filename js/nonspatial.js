@@ -22,10 +22,7 @@ d3.csv( 'data/ZayoHackathonData_CPQs.csv', function( csvDataCPQ ){
   var xOffset = 150;
   var yOffset = 20;
   var margin = 10;
-  var legend_colors = {  0 : ["On Zayo Network", "#66de9a"],
-              1 : ["Not on Zayo Network", "#ff8c69"],
-              2 : ["Build in Progress", "#fef65b"]
-            }   
+
   // Filtered By
   // State: CO
   // On Zayo Network Status: Not on Zayo Network
@@ -97,41 +94,9 @@ d3.csv( 'data/ZayoHackathonData_CPQs.csv', function( csvDataCPQ ){
                   .attr( 'class', 'axis' )
                   .attr( 'transform', 'translate(' + (xOffset) + ')' )
                   .call( yAxis );
-
   var title = d3.select("#title").append("text")
                 .style("font-size", "40px")
                 .text("Possible Revenue per Building");
-  // add legend   
-  var legend = svg.append("g")
-    .attr("class", "leg")
-    .attr("x", width - 75)
-    .attr("y", 25)
-    .attr("height", 1000)
-    .attr("width", 1000);
-
- 
-  legend.selectAll('g').data(dataCPQ)
-      .enter()
-      .append('g')
-      .each(function(d, i) {
-        var g = d3.select(this);
-        g.append("rect")
-          .attr("x",  75)
-          .attr("y", i *20)
-          .attr("width", 10)
-          .attr("height", 10)
-          .style("fill", legend_colors[String(i)][1]);
-        
-        g.append("text")
-          .attr("x", width - 70)
-          .attr("y", i * 20 + 5)
-          .attr("height",30)
-          .attr("width",100)
-          .style("fill", legend_colors[String(i)][1])
-          .text(legend_colors[String(i)][0]);
-
-  }); 
-
 
   // Create bar elements & bind data to elements
   var bar = svg.selectAll( '.bar' )
