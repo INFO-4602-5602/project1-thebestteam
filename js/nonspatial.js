@@ -1,5 +1,10 @@
 // Constants
-
+  var width = 1200;
+  var height = 650;
+  var xOffset = 150;
+  var yOffset = 20;
+  var margin = 10;
+    
 // Load CSV
 var data;
 d3.csv( 'data/ZayoHackathonData_Buildings.csv', function( csvData ){
@@ -17,11 +22,7 @@ function checkDataset(dataset) {
 d3.csv( 'data/ZayoHackathonData_CPQs.csv', function( csvDataCPQ ){
   var dataCPQ = csvDataCPQ
 
-  var width = 1200;
-  var height = 650;
-  var xOffset = 150;
-  var yOffset = 20;
-  var margin = 10;
+
  
   // Filtered By
   // State: CO
@@ -69,7 +70,8 @@ d3.csv( 'data/ZayoHackathonData_CPQs.csv', function( csvDataCPQ ){
                         } )+1] )
                  .range( [xOffset, width] );
 
-  // generate array of Building IDs to build y axis
+
+   // generate array of Building IDs to build y axis
   uniqueBuildingArr = _.map( uniqueBuildingNPVs, function( d ){
    return d['Building ID']
   } );
@@ -100,6 +102,7 @@ d3.csv( 'data/ZayoHackathonData_CPQs.csv', function( csvDataCPQ ){
                 .text("Possible Revenue per Building");
 
 
+  
   // Create bar elements & bind data to elements
   var bar = svg.selectAll( '.bar' )
                .data( uniqueBuildingNPVs );
