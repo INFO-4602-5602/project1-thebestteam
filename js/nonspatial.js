@@ -52,6 +52,9 @@ d3.csv( 'data/ZayoHackathonData_CPQs.csv', function( csvDataCPQ ){
       } )
     }
     mergedCPQAccounts = mergeAccounts( dataCPQ );
+    mergedCPQAccountsCount = _.mapValues( mergedCPQAccounts, function( val, key ){
+      return _.size( _.uniq( val ) );
+    } );
 
     dataCPQ = _.mapKeys( dataCPQ, function( d ){
       return d['Building ID'];
@@ -63,7 +66,6 @@ d3.csv( 'data/ZayoHackathonData_CPQs.csv', function( csvDataCPQ ){
                 'Building ID': key,
                 'On Zayo Network Status': _.result(val[0], 'On Zayo Network Status'),
                 'X36 NPV List': _.sumBy( val, 'X36 NPV List'),
-                'Account': _.countBy(val, 'Account ID')
               })).value();
 
     // TODO: remove this line once data is properly filtered
