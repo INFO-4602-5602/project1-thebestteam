@@ -111,9 +111,20 @@ d3.csv( 'data/ZayoHackathonData_CPQs.csv', function( csvDataCPQ ){
                     .attr( 'transform', 'translate(' + (xOffset) + ')' )
                     .call( yAxis );
 
-    var title = d3.select("#title").append("text")
-                  .style("font-size", "40px")
-                  .text("Possible Revenue per Building");
+    var title = d3.select( '#title' ).append( 'text' )
+                  .style( 'font-size', '40px' )
+                  .text( 'Possible Revenue per Building' );
+
+    var tooltip = d3.tip()
+                    .attr( 'class', 'tooltip' )
+                    .offset([-10, 0])
+                    .html( function( d ){
+                      console.log(d)
+                      return (
+                        "<strong>Network Status:</strong> <span>" + d['On Zayo Network Status'] + "</span>"
+                      );
+                    } );
+    svg.call( tooltip );
 
     // Create bar elements & bind data to elements
     var bar = svg.selectAll( '.bar' )
@@ -134,6 +145,8 @@ d3.csv( 'data/ZayoHackathonData_CPQs.csv', function( csvDataCPQ ){
        .attr( 'width', function( d ){ return xScale(d['X36 NPV List']) - xOffset; } )
        .attr( 'x', function(){ return xOffset; } )
        .attr( 'y', function( d ){ return yScale(d['Building ID']); } )
+       .on( 'mouseover', tooltip.show )
+       .on( 'mouseout', tooltip.hide )
        .on( 'click', function( d ){
          d3.select('#info')
             .text(" Building ID: "+d['Building ID']+", Possible Revenue According to CPQ NPV: $"+ d['X36 NPV List']).style("font-size", "30px");

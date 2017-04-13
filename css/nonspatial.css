@@ -1,3 +1,5 @@
+
+/* Axes */
 .axis path,
 .axis line {
     fill: none;
@@ -5,6 +7,7 @@
     shape-rendering: crispEdges;
 }
 
+/* Bar Chart */
 .barBuild {
   fill: #fef65b;
   stroke: none;
@@ -18,11 +21,29 @@
   stroke: none;
 }
 
-#legend{
+/* Legend */
+#legend {
 	vertical-align:top;
 	display: inline-block;
 }
 
-#nonspacial{
-	display: inline-block
+/* Tooltips */
+.tooltip {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 2px;
+  color: rgba(0, 0, 0, 0.75);
+  line-height: 1;
+  padding: 12px;
+}
+
+.tooltip:after {
+  box-sizing: border-box;
+  color: rgba(0, 0, 0, 0.1);
+  content: '';
+  display: inline;
+  font-size: 10px;
+  line-height: 1;
+  position: absolute;
+  text-align: center;
+  width: 100%;
 }
