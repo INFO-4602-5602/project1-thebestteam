@@ -48,12 +48,12 @@ d3.csv( 'data/ZayoHackathonData_CPQs.csv', function( csvDataCPQ ){
       var merged = _.groupBy( arr, 'Building ID' );
       return merged = _.mapValues( merged, function( v ){
         merged = _.map( v, 'Account ID' );
-        return merged;
+        return _.uniq( merged );
       } )
     }
     mergedCPQAccounts = mergeAccounts( dataCPQ );
     mergedCPQAccountsCount = _.mapValues( mergedCPQAccounts, function( val, key ){
-      return _.size( _.uniq( val ) );
+      return _.size( val );
     } );
 
     dataCPQ = _.mapKeys( dataCPQ, function( d ){
