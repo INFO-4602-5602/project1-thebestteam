@@ -1,3 +1,6 @@
+html, body, h1, h2, h3, p, span, text {
+  font-family: 'Open Sans', sans-serif;
+}
 
 /* Axes */
 .axis path,
