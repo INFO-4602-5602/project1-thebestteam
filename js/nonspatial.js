@@ -88,7 +88,7 @@ d3.csv( 'data/ZayoHackathonData_CPQs.csv', function( csvDataCPQ ){
                       .ticks( 5 );
     var xAxisG = svg.append( 'g' )
                     .attr( 'class', 'axis' )
-                    .attr( 'transform', 'translate(0, ' + (height-yOffset) + ')' )
+                    .attr( 'transform', 'translate(0, ' + (height-yOffset-1) + ')' )
                     .call( xAxis );
     var xLabel = svg.append("text")
                     .attr('class', 'label')
