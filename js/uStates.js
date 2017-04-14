@@ -186,20 +186,110 @@ var map = L.map('map').setView([39.75621, -104.99404], 11);
   
 */
     
+    //Legent
+legend = d3.select('#legend')
+svg = legend.append('svg').attr('height', 650).attr('width', 350)
+rect = svg.append('rect')
+                .attr('width', 300)
+                .attr('height', 270)
+                .attr('x', 40)
+                .attr('y', 0)
+                .style('fill', 'white')
+                .attr('stroke', 'black')
+text = svg.append('text').text('Key')
+                .attr('x', 50)
+                .attr('y', 30)
+                .attr('fill', 'black')
+                .style("font-size", "30px")
+      svg.append('rect')
+                .attr('width', 20)
+                .attr('height', 20)
+                .attr('x', 50)
+                .attr('y', 50)
+                .style('fill', 'red')
+                .attr('stroke', 'red')
+text = svg.append('text').text('Ethernet')
+                .attr('x', 75)
+                .attr('y', 67)
+                .attr('fill', 'black')
+                .style("font-size", "20px")
+      svg.append('rect')
+                .attr('width', 20)
+                .attr('height', 20)
+                .attr('x', 50)
+                .attr('y', 80)
+                .style('fill', 'blue')
+                .attr('stroke', 'blue')
+      text = svg.append('text').text('zColo')
+                .attr('x', 75)
+                .attr('y', 97)
+                .attr('fill', 'black')
+                .style("font-size", "20px")
+      svg.append('rect')
+                .attr('width', 20)
+                .attr('height', 20)
+                .attr('x', 50)
+                .attr('y', 110)
+                .style('fill', 'green')
+                .attr('stroke', 'green')
+      text = svg.append('text').text('IP Services')
+                .attr('x', 75)
+                .attr('y', 127)
+                .attr('fill', 'black')
+                .style("font-size", "20px")
+      
+      svg.append('rect')
+                .attr('width', 20)
+                .attr('height', 20)
+                .attr('x', 50)
+                .attr('y', 140)
+                .style('fill', 'orange')
+                .attr('stroke', 'orange')
+text = svg.append('text').text('Wavelengths - Metro')
+                .attr('x', 75)
+                .attr('y', 157)
+                .attr('fill', 'black')
+                .style("font-size", "20px")
 
+svg.append('rect')
+                .attr('width', 20)
+                .attr('height', 20)
+                .attr('x', 50)
+                .attr('y', 170)
+                .style('fill', 'black')
+                .attr('stroke', 'black')
+text = svg.append('text').text('Dark Fiber - Metro')
+                .attr('x', 75)
+                .attr('y', 187)
+                .attr('fill', 'black')
+                .style("font-size", "20px")
 
+svg.append('rect')
+                .attr('width', 20)
+                .attr('height', 20)
+                .attr('x', 50)
+                .attr('y', 200)
+                .style('fill', 'purple')
+                .attr('stroke', 'purple')
+text = svg.append('text').text('Wavelengths - Long Haul')
+                .attr('x', 75)
+                .attr('y', 217)
+                .attr('fill', 'black')
+                .style("font-size", "20px")
+
+svg.append('rect')
+                .attr('width', 20)
+                .attr('height', 20)
+                .attr('x', 50)
+                .attr('y', 230)
+                .style('fill', 'yellow')
+                .attr('stroke', 'yellow')
+text = svg.append('text').text('SONET')
+                .attr('x', 75)
+                .attr('y', 247)
+                .attr('fill', 'black')
+                .style("font-size", "20px")
+      
 });
-
-
-
-
-
-
-
-
-
-
-
-
 
 

@@ -12,7 +12,7 @@ Information about your visualizations and what they show.
 Include information about interactions as appropriate.
 
 ### Spatial
-This is a map of Colorado Zayo Buildings and each of their respective industries, color mapped. 
+This is a map of Colorado Zayo Buildings and each of their respective products, color mapped. 
 
 ### Non-Spatial
 
