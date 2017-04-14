@@ -1,9 +1,8 @@
 // Constants
 var width = 1200;
 var height = 750;
-var xOffset = 150;
+var xOffset = 195
 var yOffset = 50;
-// var margin = 20;
 var padding =10;
 
 // Load CSV
@@ -80,7 +79,7 @@ d3.csv( 'data/ZayoHackathonData_CPQs.csv', function( csvDataCPQ ){
 
     var yScale = d3.scale.ordinal()
                   .domain( uniqueBuildingArr )
-                  .rangeRoundBands([0, height-yOffset], .1, .6);
+                  .rangeRoundBands([0, height-yOffset-1], .1, .6);
 
     // Create axes
     var xAxis = d3.svg.axis()
@@ -89,23 +88,30 @@ d3.csv( 'data/ZayoHackathonData_CPQs.csv', function( csvDataCPQ ){
                       .ticks( 5 );
     var xAxisG = svg.append( 'g' )
                     .attr( 'class', 'axis' )
-                    .attr( 'transform', 'translate(0, ' + (height-yOffset+1) + ')' )
+                    .attr( 'transform', 'translate(0, ' + (height-yOffset) + ')' )
                     .call( xAxis );
     var xLabel = svg.append("text")
-                  .attr('class', 'label')
-                  .attr('x', width/2)
-                  .attr( 'transform', 'translate(0, ' + (height) + ')' )
-                  .style("font-size", "20px")  //bigger text, bold and font change
-                  .text("36 Month NPV");
+                    .attr('class', 'label')
+                    .attr('x', width/2)
+                    .attr( 'transform', 'translate(0, ' + (height) + ')' )
+                    .style("font-size", "18px")  
+                    .text("36 Month NPV");
 
     var yAxis = d3.svg.axis()
                       .scale( yScale )
                       .orient( 'left' );
     var yAxisG = svg.append( 'g' )
                     .attr( 'class', 'axis' )
-                    .attr( 'transform', 'translate(' + (xOffset) + ')' )
+                    .attr( 'transform', 'translate(' + (xOffset-1) + ')' )
                     .call( yAxis );
 
+    var yLabel = svg.append("text")
+                    .attr('class', 'label')
+                    .attr( 'transform', 'translate(' + (xOffset/2-90) + ')')
+                    .attr('y', height/2)
+                    .style("font-size", "18px")
+                    .text("Building ID");
+          
     var title = d3.select( '#title' ).append( 'text' )
                   .style( 'font-size', '40px' )
                   .text( 'Possible Revenue per Building' );
