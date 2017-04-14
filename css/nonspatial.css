@@ -2,6 +2,10 @@ html, body, h1, h2, h3, p, span, text, div {
   font-family: 'Open Sans', sans-serif;
 }
 
+p {
+  font-size: 16px;
+}
+
 /* Axes */
 .axis path,
 .axis line {
@@ -13,15 +17,12 @@ html, body, h1, h2, h3, p, span, text, div {
 /* Bar Chart */
 .barBuild {
   fill: #fef65b;
-  stroke: none;
 }
 .barOn {
   fill: #66de9a;
-  stroke: none;
 }
 .barOff {
   fill: #ff8c69;
-  stroke: none;
 }
 
 /* Legend */
@@ -47,11 +48,16 @@ html, body, h1, h2, h3, p, span, text, div {
 .tooltip:after {
   box-sizing: border-box;
   color: rgba(237, 237, 237, 0.7);
-  content: '';
+  content: '\25BC';
   display: inline;
   font-size: 10px;
   line-height: 1;
   position: absolute;
   text-align: center;
   width: 100%;
+}
+.tooltip.n:after {
+  margin: -1px 0 0 0;
+  top: 100%;
+  left: 0;
 }
