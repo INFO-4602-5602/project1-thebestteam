@@ -52,6 +52,8 @@ d3.csv( 'data/ZayoHackathonData_CPQs.csv', function( csvDataCPQ ){
               .map( (val, key) => ({
                 'Building ID': key,
                 'On Zayo Network Status': _.result(val[0], 'On Zayo Network Status'),
+                'Product Group': _.result(val[0], 'Product Group'),
+                'City': _.result(val[0], 'City'),
                 'X36 NPV List': _.sumBy( val, 'X36 NPV List'),
               })).value();
 
@@ -142,7 +144,12 @@ d3.csv( 'data/ZayoHackathonData_CPQs.csv', function( csvDataCPQ ){
               .text( d['Building ID'] )
             d3.select( '#npv' )
               .text( d['X36 NPV List'] )
+            d3.select( '#productgroup')
+              .text( d['Product Group'] )
+            d3.select( '#city')
+              .text( d['City'] )
         })
+
 
     bar.append( 'svg:title' )
         .text(function( d ){ return d['On Zayo Network Status'] });
