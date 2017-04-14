@@ -3,12 +3,10 @@
 //then, show zayo what they are already making using the data_services file
 //THEN make a graph combining the two with a sort of "you could be making this if you close all your deals"
 
-var width = 1200;
-var height = 650;
-var xOffset = 150;
+var height = 700;
+var width = 1000;
+var xOffset = 15;
 var yOffset = 20;
-var margin = 20;
-var padding =10;
 
 d3.csv('data/ZayoHackathonData_CPQs.csv', function(data) {
 	var CPQdata = data
@@ -194,59 +192,46 @@ d3.csv('data/ZayoHackathonData_CPQs.csv', function(data) {
     	})).value();
 
     var svg = d3.select( '#nonspatial2' ).append('svg:svg')
-    	.attr('width', width)
-    	.attr('height', height);
+    			.attr('width', width)
+    			.attr('height', height);
 
     productArray = _.map(productNPVs, function(d){
     	return d['Product Group']
     });
 
     var xScale = d3.scale.ordinal()
-    	.domain(productArray)
-    	.rangeRoundBands([0, width]);
+    					 .domain(productArray)
+    					 .rangeRoundBands([0, width]);
 
     var yScale = d3.scale.linear()
-    	.domain([0, d3.max(productNPVs, function(d){
-    		return parseFloat(d['X36 NPV List']);
-    	})+1])
-    	.range([yOffset, height]);
+				    	 .domain([0, d3.max(productNPVs, function(d){
+				    	 	return parseFloat(d['X36 NPV List']);
+				    	 })+1])
+				    	 .range([yOffset, height]);
 
     var xAxis = d3.svg.axis()
-    	.scale(xScale)
-    	.orient('bottom');
-
+			    	  .scale(xScale)
+			    	  .orient('bottom');
     var xAxisG = svg.append('g')
-    	.attr('class','axis')
-    	.attr('transform','translate(0, '+ ( height - yOffset - 1 ) +')')
-    	.call(xAxis);
+			    	.attr('class','axis')
+			    	.attr('transform','translate(0, '+ ( height - yOffset - 1 ) +')')
+			    	.call(xAxis);
 
     var yAxis = d3.svg.axis()
-    	.scale(yScale)
-    	.orient('left')
-    	.ticks(10);
-
+			    	  .scale(yScale)
+			    	  .orient('left')
+			    	  .ticks(5);
     var yAxisG = svg.append('g')
-    	.attr('class', 'axis')
-    	.attr('transform', 'translate(' + (xOffset) + ')')
-    	.call(yAxis);
+			    	.attr('class', 'axis')
+			    	.attr('transform', 'translate(' + (xOffset) + ')')
+			    	.call(yAxis);
 
     var bar = svg.selectAll( '.bar' )
-                 .data( uniqueBuildingNPVs );
-    bar.enter().append( 'svg:rect' );
-    bar.attr( 'class', function( d ){
-            return 'barBuild';
-        })
-       .attr( 'height', yScale, function( d ){ return yScale(d['X36 NPV List']) - yOffset; } )
-       .attr( 'width', xScale.rangeBand)
-       .attr( 'x', function(){ return xOffset; } )
-       .attr( 'y', function( d ){ return yScale(d['Building ID']); } )
+                 .data( productNPVs );
+    bar.enter().append( 'svg:rect' )
+       .attr( 'height', function( d ){ return yScale(d['X36 NPV List']) - yOffset; } )
+       .attr( 'width', 100)
+       .attr( 'y', function(){ return yOffset; } )
+       .attr( 'x', function( d ){ return xScale(d['Product Group']); } )
+       .style('fill', 'green');
 });
-
-
-
-
-
-
-
-
-
