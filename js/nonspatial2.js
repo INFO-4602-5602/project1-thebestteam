@@ -3,7 +3,15 @@
 //then, show zayo what they are already making using the data_services file
 //THEN make a graph combining the two with a sort of "you could be making this if you close all your deals"
 
+var width = 1200;
+var height = 650;
+var xOffset = 150;
+var yOffset = 20;
+var margin = 20;
+var padding =10;
+
 d3.csv('data/ZayoHackathonData_CPQs.csv', function(data) {
+	var CPQdata = data
 	var ethernetCPQData = data
 	var waveMetroCPQData = data
 	var IPCPQData = data
@@ -14,6 +22,8 @@ d3.csv('data/ZayoHackathonData_CPQs.csv', function(data) {
 	var videoCPQData = data
 	var cloudCPQData = data
 
+	//I have to do this for every product because I need to keep track of the account with the highest NPV value.
+
 	//Filtered by:
 	//ethernet
 	//CO
@@ -22,7 +32,7 @@ d3.csv('data/ZayoHackathonData_CPQs.csv', function(data) {
 		return d['State'] === 'CO' && d['X36 NPV List'] !== ' $-   ' && d['Product Group'] === 'Ethernet';
 	});
 
-	ethernetCPQData = _.map( dataCPQ, function(d){
+	ethernetCPQData = _.map( ethernetCPQData, function(d){
       return {
         'Account ID': d['Account ID'],
         'Product Group': d['Product Group'],
@@ -34,11 +44,11 @@ d3.csv('data/ZayoHackathonData_CPQs.csv', function(data) {
     //wavelengths - metro
     //CO
     //non-empty NPV value
-    waveMetroCPQData = _.filter(ethernetCPQData, function(d){
+    waveMetroCPQData = _.filter(waveMetroCPQData, function(d){
 		return d['State'] === 'CO' && d['X36 NPV List'] !== ' $-   ' && d['Product Group'] === 'Wavelengths - Metro';
 	});
 
-	waveMetroCPQData = _.map( dataCPQ, function(d){
+	waveMetroCPQData = _.map( waveMetroCPQData, function(d){
       return {
         'Account ID': d['Account ID'],
         'Product Group': d['Product Group'],
@@ -50,11 +60,11 @@ d3.csv('data/ZayoHackathonData_CPQs.csv', function(data) {
     //IP
     //CO
     //non-empty NPV value
-    IPCPQData = _.filter(ethernetCPQData, function(d){
+    IPCPQData = _.filter(IPCPQData, function(d){
 		return d['State'] === 'CO' && d['X36 NPV List'] !== ' $-   ' && d['Product Group'] === 'IP Services';
 	});
 
-	IPCPQData = _.map( dataCPQ, function(d){
+	IPCPQData = _.map( IPCPQData, function(d){
       return {
         'Account ID': d['Account ID'],
         'Product Group': d['Product Group'],
@@ -66,11 +76,11 @@ d3.csv('data/ZayoHackathonData_CPQs.csv', function(data) {
     //zColo
     //CO
     //non-empty NPV value
-    zColoCPQData = _.filter(ethernetCPQData, function(d){
+    zColoCPQData = _.filter(zColoCPQData, function(d){
 		return d['State'] === 'CO' && d['X36 NPV List'] !== ' $-   ' && d['Product Group'] === 'zColo';
 	});
 
-	zColoCPQData = _.map( dataCPQ, function(d){
+	zColoCPQData = _.map( zColoCPQData, function(d){
       return {
         'Account ID': d['Account ID'],
         'Product Group': d['Product Group'],
@@ -82,11 +92,11 @@ d3.csv('data/ZayoHackathonData_CPQs.csv', function(data) {
     //wavelengths - long haul
     //CO
     //non-empty NPV value
-    waveLongCPQData = _.filter(ethernetCPQData, function(d){
+    waveLongCPQData = _.filter(waveLongCPQData, function(d){
 		return d['State'] === 'CO' && d['X36 NPV List'] !== ' $-   ' && d['Product Group'] === 'Wavelengths - Long Haul';
 	});
 
-	waveLongCPQData = _.map( dataCPQ, function(d){
+	waveLongCPQData = _.map( waveLongCPQData, function(d){
       return {
         'Account ID': d['Account ID'],
         'Product Group': d['Product Group'],
@@ -98,11 +108,11 @@ d3.csv('data/ZayoHackathonData_CPQs.csv', function(data) {
     //dark fiber
     //CO
     //non-empty NPV value
-    darkCPQData = _.filter(ethernetCPQData, function(d){
+    darkCPQData = _.filter(darkCPQData, function(d){
 		return d['State'] === 'CO' && d['X36 NPV List'] !== ' $-   ' && d['Product Group'] === 'Dark Fiber - Metro';
 	});
 
-	darkCPQData = _.map( dataCPQ, function(d){
+	darkCPQData = _.map( darkCPQData, function(d){
       return {
         'Account ID': d['Account ID'],
         'Product Group': d['Product Group'],
@@ -114,11 +124,11 @@ d3.csv('data/ZayoHackathonData_CPQs.csv', function(data) {
     //sonet
     //CO
     //non-empty NPV value
-    SONETCPQData = _.filter(ethernetCPQData, function(d){
+    SONETCPQData = _.filter(SONETCPQData, function(d){
 		return d['State'] === 'CO' && d['X36 NPV List'] !== ' $-   ' && d['Product Group'] === 'SONET';
 	});
 
-	SONETCPQData = _.map( dataCPQ, function(d){
+	SONETCPQData = _.map( SONETCPQData, function(d){
       return {
         'Account ID': d['Account ID'],
         'Product Group': d['Product Group'],
@@ -130,11 +140,11 @@ d3.csv('data/ZayoHackathonData_CPQs.csv', function(data) {
     //live video
     //CO
     //non-empty NPV value
-    videoCPQData = _.filter(ethernetCPQData, function(d){
+    videoCPQData = _.filter(videoCPQData, function(d){
 		return d['State'] === 'CO' && d['X36 NPV List'] !== ' $-   ' && d['Product Group'] === 'Live Video';
 	});
 
-	videoCPQData = _.map( dataCPQ, function(d){
+	videoCPQData = _.map( videoCPQData, function(d){
       return {
         'Account ID': d['Account ID'],
         'Product Group': d['Product Group'],
@@ -146,15 +156,97 @@ d3.csv('data/ZayoHackathonData_CPQs.csv', function(data) {
     //cloud
     //CO
     //non-empty NPV value
-    cloudCPQData = _.filter(ethernetCPQData, function(d){
+    cloudCPQData = _.filter(cloudCPQData, function(d){
 		return d['State'] === 'CO' && d['X36 NPV List'] !== ' $-   ' && d['Product Group'] === 'Cloud';
 	});
 
-	cloudCPQData = _.map( dataCPQ, function(d){
+	cloudCPQData = _.map( cloudCPQData, function(d){
       return {
         'Account ID': d['Account ID'],
         'Product Group': d['Product Group'],
         'X36 NPV List': parseFloat( d['X36 NPV List'] )
       }
     });
+
+    //generic to build the graph
+
+    CPQdata = _.filter(CPQdata, function(d){
+		return d['State'] === 'CO' && d['X36 NPV List'] !== ' $-   ';
+	});
+
+	CPQdata = _.map( CPQdata, function(d){
+      return {
+        'Account ID': d['Account ID'],
+        'Product Group': d['Product Group'],
+        'X36 NPV List': parseFloat( d['X36 NPV List'] )
+      }
+    });
+
+    CPQdata = _.mapKeys( CPQdata, function( d ){
+      return d['Product Group'];
+    });
+
+    productNPVs = _(CPQdata)
+    	.groupBy('Product Group')
+    	.map((val, key) => ({
+    		'Product Group': key,
+    		'X36 NPV List': _.sumBy(val, 'X36 NPV List'),
+    	})).value();
+
+    var svg = d3.select( '#nonspatial2' ).append('svg:svg')
+    	.attr('width', width)
+    	.attr('height', height);
+
+    productArray = _.map(productNPVs, function(d){
+    	return d['Product Group']
+    });
+
+    var xScale = d3.scale.ordinal()
+    	.domain(productArray)
+    	.rangeRoundBands([0, width]);
+
+    var yScale = d3.scale.linear()
+    	.domain([0, d3.max(productNPVs, function(d){
+    		return parseFloat(d['X36 NPV List']);
+    	})+1])
+    	.range([yOffset, height]);
+
+    var xAxis = d3.svg.axis()
+    	.scale(xScale)
+    	.orient('bottom');
+
+    var xAxisG = svg.append('g')
+    	.attr('class','axis')
+    	.attr('transform','translate(0, '+ ( height - yOffset - 1 ) +')')
+    	.call(xAxis);
+
+    var yAxis = d3.svg.axis()
+    	.scale(yScale)
+    	.orient('left')
+    	.ticks(10);
+
+    var yAxisG = svg.append('g')
+    	.attr('class', 'axis')
+    	.attr('transform', 'translate(' + (xOffset) + ')')
+    	.call(yAxis);
+
+    var bar = svg.selectAll( '.bar' )
+                 .data( uniqueBuildingNPVs );
+    bar.enter().append( 'svg:rect' );
+    bar.attr( 'class', function( d ){
+            return 'barBuild';
+        })
+       .attr( 'height', yScale, function( d ){ return yScale(d['X36 NPV List']) - yOffset; } )
+       .attr( 'width', xScale.rangeBand)
+       .attr( 'x', function(){ return xOffset; } )
+       .attr( 'y', function( d ){ return yScale(d['Building ID']); } )
 });
+
+
+
+
+
+
+
+
+
