@@ -7,19 +7,6 @@ var margin = 20;
 var padding =10;
 
 // Load CSV
-var data;
-d3.csv( 'data/ZayoHackathonData_Buildings.csv', function( csvData ){
-  data = csvData;
-  checkDataset( data );
-});
-
-function checkDataset(dataset) {
-    if (dataset.length > 0)
-        $("#dataCheck").append("<p>Data loaded correctly!</p>");
-    else
-        $("#dataCheck").append("<p>Data loaded incorrectly. Try using the debugger to help you find the bug!</p>");
-}
-
 d3.csv( 'data/ZayoHackathonData_CPQs.csv', function( csvDataCPQ ){
   d3.csv( 'data/ZayoHackathonData_Accounts.csv', function( csvDataAccounts ){
     var dataCPQ = csvDataCPQ
@@ -119,9 +106,10 @@ d3.csv( 'data/ZayoHackathonData_CPQs.csv', function( csvDataCPQ ){
                     .attr( 'class', 'tooltip' )
                     .offset([-10, 0])
                     .html( function( d ){
-                      console.log(d)
+                      var npv = d['X36 NPV List'];
+                      npv = npv.toLocaleString('en-US', {minimumFractionDigits: 2});
                       return (
-                        "<strong>Network Status:</strong> <span>" + d['On Zayo Network Status'] + "</span>"
+                        "<strong>NPV:</strong> <span>$" + npv + "</span>"
                       );
                     } );
     svg.call( tooltip );
@@ -148,9 +136,11 @@ d3.csv( 'data/ZayoHackathonData_CPQs.csv', function( csvDataCPQ ){
        .on( 'mouseover', tooltip.show )
        .on( 'mouseout', tooltip.hide )
        .on( 'click', function( d ){
-         d3.select('#info')
-            .text(" Building ID: "+d['Building ID']+", Possible Revenue According to CPQ NPV: $"+ d['X36 NPV List']).style("font-size", "30px");
-      })
+         d3.select('#building')
+            .text(d['Building ID'])
+         d3.select('#npv')
+            .text(d['X36 NPV List'])
+        })
 
     bar.append( 'svg:title' )
         .text(function( d ){ return d['On Zayo Network Status'] });
@@ -166,12 +156,13 @@ rect = svg.append('rect')
                 .attr('x', 40)
                 .attr('y', 0)
                 .style('fill', 'white')
-                .attr('stroke', 'black')
+                .attr('stroke', 'rgba(0, 0, 0, 0.3)')
 text = svg.append('text').text('Legend')
-                .attr('x', 50)
+                .attr('x', 150)
                 .attr('y', 30)
-                .attr('fill', 'black')
-                .style("font-size", "30px")
+                .attr('fill', 'rgba(0, 0, 0, 0.85)')
+                .style('font-size', '24px')
+                .style('text-align', 'center')
       svg.append('rect')
                 .attr('width', 20)
                 .attr('height', 20)
@@ -182,8 +173,8 @@ text = svg.append('text').text('Legend')
 text = svg.append('text').text('On Zayo Network')
                 .attr('x', 75)
                 .attr('y', 67)
-                .attr('fill', 'black')
-                .style("font-size", "20px")
+                .attr('fill', 'rgba(0, 0, 0, 0.85)')
+                .style("font-size", "18px")
       svg.append('rect')
                 .attr('width', 20)
                 .attr('height', 20)
@@ -194,8 +185,8 @@ text = svg.append('text').text('On Zayo Network')
       text = svg.append('text').text('Not on Zayo Network')
                 .attr('x', 75)
                 .attr('y', 97)
-                .attr('fill', 'black')
-                .style("font-size", "20px")
+                .attr('fill', 'rgba(0, 0, 0, 0.85)')
+                .style("font-size", "18px")
       svg.append('rect')
                 .attr('width', 20)
                 .attr('height', 20)
@@ -206,5 +197,5 @@ text = svg.append('text').text('On Zayo Network')
       text = svg.append('text').text('Build in Progress')
                 .attr('x', 75)
                 .attr('y', 127)
-                .attr('fill', 'black')
-                .style("font-size", "20px")
+                .attr('fill', 'rgba(0, 0, 0, 0.85)')
+                .style("font-size", "18px")

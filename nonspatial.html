@@ -42,13 +42,26 @@
             </div>
         </div> <!-- end container -->
     </nav>
-    <div id="dataCheck"></div>
-    <center id= "title"></center>
-    <div align="center">
-       <div id="nonspatial"></div>
-       <div id="legend"></div>
+
+    <div class="container-fluid" align="center">
+      <div class="row">
+          <h1 id="title"></h1>
+      </div>
+      <div class="row">
+          <div class="col-md-2">
+            <div id="legend">
+              <div id="#info">
+                <p><b>Selected Building ID</b> &nbsp;&nbsp; <span id="building"></span></p>
+                <p><b>Possible Revenue by NPV</b> &nbsp;&nbsp; <span id="npv"></span></p>
+              </div>
+            </div>
+
+          </div>
+          <div class="col-md-10">
+            <div id="nonspatial"></div>
+          </div>
+      </div>
     </div>
-    <div id="info">Click</div>
     <script type="text/javascript" src="js/nonspatial.js"></script>
 </body>
 </html>

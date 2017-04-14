@@ -1,4 +1,4 @@
-html, body, h1, h2, h3, p, span, text {
+html, body, h1, h2, h3, p, span, text, div {
   font-family: 'Open Sans', sans-serif;
 }
 
@@ -26,22 +26,27 @@ html, body, h1, h2, h3, p, span, text {
 
 /* Legend */
 #legend {
-	vertical-align:top;
-	display: inline-block;
+  display: inline-block;
+	vertical-align: top;
+}
+
+/* Info */
+#info {
+  margin-bottom: 30px;
 }
 
 /* Tooltips */
 .tooltip {
-  background: rgba(0, 0, 0, 0.1);
+  background: rgba(237, 237, 237, 0.7);
   border-radius: 2px;
-  color: rgba(0, 0, 0, 0.75);
+  color: rgba(0, 0, 0, 0.85);
   line-height: 1;
   padding: 12px;
 }
 
 .tooltip:after {
   box-sizing: border-box;
-  color: rgba(0, 0, 0, 0.1);
+  color: rgba(237, 237, 237, 0.7);
   content: '';
   display: inline;
   font-size: 10px;
