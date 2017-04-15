@@ -3,10 +3,11 @@
 //then, show zayo what they are already making using the data_services file
 //THEN make a graph combining the two with a sort of "you could be making this if you close all your deals"
 
-var height = 700;
-var width = 1000;
-var xOffset = 15;
+var height = 750;
+var width = 1100;
+var xOffset = 60;
 var yOffset = 20;
+var margin = 10;
 
 d3.csv('data/ZayoHackathonData_CPQs.csv', function(data) {
 	var CPQdata = data
@@ -201,37 +202,45 @@ d3.csv('data/ZayoHackathonData_CPQs.csv', function(data) {
 
     var xScale = d3.scale.ordinal()
     					 .domain(productArray)
-    					 .rangeRoundBands([0, width]);
+    					 .rangeRoundBands([0, width - margin - 50]);
 
     var yScale = d3.scale.linear()
 				    	 .domain([0, d3.max(productNPVs, function(d){
 				    	 	return parseFloat(d['X36 NPV List']);
 				    	 })+1])
-				    	 .range([yOffset, height]);
+				    	 // .domain([d3.max(productNPVs, function(d){
+				    	 // 	return parseFloat(d['X36 NPV List']);
+				    	 // })+1,0])
+				    	 .range([height - yOffset - margin, margin]);
 
     var xAxis = d3.svg.axis()
 			    	  .scale(xScale)
 			    	  .orient('bottom');
     var xAxisG = svg.append('g')
 			    	.attr('class','axis')
-			    	.attr('transform','translate(0, '+ ( height - yOffset - 1 ) +')')
+			    	.attr('transform','translate('+ xOffset +', '+ ( height - yOffset) +')')
 			    	.call(xAxis);
 
     var yAxis = d3.svg.axis()
 			    	  .scale(yScale)
 			    	  .orient('left')
-			    	  .ticks(5);
+			    	  .ticks(10);
     var yAxisG = svg.append('g')
 			    	.attr('class', 'axis')
-			    	.attr('transform', 'translate(' + (xOffset) + ')')
+			    	.attr('transform', 'translate(' + (xOffset) + ',0)')
 			    	.call(yAxis);
 
-    var bar = svg.selectAll( '.bar' )
-                 .data( productNPVs );
-    bar.enter().append( 'svg:rect' )
-       .attr( 'height', function( d ){ return yScale(d['X36 NPV List']) - yOffset; } )
-       .attr( 'width', 100)
-       .attr( 'y', function(){ return yOffset; } )
-       .attr( 'x', function( d ){ return xScale(d['Product Group']); } )
-       .style('fill', 'green');
+	var title = d3.select( '#title' ).append( 'text' )
+                  .style( 'font-size', '40px' )
+                  .text( 'Possible Revenue Per Product Group' );
+
+    var bar = svg.selectAll( 'rect' )
+                 .data( productNPVs )
+                 .enter()
+                 .append( 'rect' )
+       			 .attr( 'height', function( d ){ return height - yScale(d['X36 NPV List']) - xOffset; } )//d['X36 NPV List']) - yOffset
+		         .attr( 'width', 75)
+		         .attr( 'y', function(d){ return yScale(d['X36 NPV List']) + yOffset + 20; } )
+		         .attr( 'x', function( d ){ return xScale(d['Product Group']) + xOffset + 20; } )
+		         .style('fill', 'green');
 });
