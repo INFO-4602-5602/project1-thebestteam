@@ -177,7 +177,7 @@ d3.csv('data/ZayoHackathonData_CPQs.csv', function(data) {
       return {
         'Account ID': d['Account ID'],
         'Product Group': d['Product Group'],
-        'X36 NPV List': parseFloat( d['X36 NPV List'] )
+        'X36 NPV List': parseFloat(Number(d['X36 NPV List'].replace(/[^0-9\.]+/g,"")))
       }
     });
 
@@ -256,7 +256,7 @@ d3.csv('data/ZayoHackathonData_Services.csv', function(data){
       return {
         'Account ID': d['Account ID'],
         'Product_Group': d['Product Group'],
-        ' Total MRR ': Number(d[' Total MRR '].replace(/[^0-9\.]+/g,""))
+        ' Total MRR ': parseFloat(Number(d[' Total MRR '].replace(/[^0-9\.]+/g,"")))
       }
     });
 
@@ -322,4 +322,13 @@ d3.csv('data/ZayoHackathonData_Services.csv', function(data){
 		         .attr( 'y', function(d){ return yScale(d[' Total MRR ']) + yOffset + 20; } )
 		         .attr( 'x', function( d ){ return xScale(d['Product_Group']) + xOffset + 20; } )
 		         .style('fill', 'red');
+});
+
+d3.csv('data/ZayoHackathonData_CPQs.csv', function(dataCPQ){
+	d3.csv('data/ZayoHackathonData_Services.csv', function(dataServices){
+		var CPQdata = dataCPQ;
+		var servicesData = dataServices;
+
+		
+	});
 });
