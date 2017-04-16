@@ -11,6 +11,7 @@ var margin = 10;
 
 d3.csv('data/ZayoHackathonData_CPQs.csv', function(data) {
 	var CPQdata = data
+	var CPQdata2 = data
 	var ethernetCPQData = data
 	var waveMetroCPQData = data
 	var IPCPQData = data
@@ -169,28 +170,31 @@ d3.csv('data/ZayoHackathonData_CPQs.csv', function(data) {
 
     //generic to build the graph
 
-    CPQdata = _.filter(CPQdata, function(d){
+    CPQdata2 = _.filter(CPQdata2, function(d){
 		return d['X36 NPV List'] !== ' $-   ';
 	});
 
-	CPQdata = _.map( CPQdata, function(d){
+	CPQdata2 = _.map( CPQdata2, function(d){
       return {
-        'Account ID': d['Account ID'],
-        'Product Group': d['Product Group'],
-        'X36 NPV List': parseFloat(Number(d['X36 NPV List'].replace(/[^0-9\.]+/g,"")))
+        'Account_ID': d['Account ID'],
+        'Product_Group': d['Product Group'],
+        'X36_NPV_List': parseFloat(Number(d['X36 NPV List'].replace(/[^0-9\.]+/g,"")))
       }
     });
 
-    CPQdata = _.mapKeys( CPQdata, function( d ){
-      return d['Product Group'];
-    });
+    var npvbyGroup = d3.nest()
+    	.key(function(d){ return d.Product_Group;})
+    	.rollup(function(v){ return d3.sum(v, function(d){ return d.X36_NPV_List})})
+    	.entries(CPQdata2);
 
-    productNPVs = _(CPQdata)
-    	.groupBy('Product Group')
+    productNPVs = _(npvbyGroup)
+    	.groupBy('key')
     	.map((val, key) => ({
     		'Product Group': key,
-    		'X36 NPV List': _.sumBy(val, 'X36 NPV List'),
+    		'X36 NPV List': _.sumBy(val, 'values'),
     	})).value();
+
+    console.log(productNPVs);
 
     var svg = d3.select( '#nonspatial2' ).append('svg:svg')
     			.attr('width', width)
@@ -218,8 +222,15 @@ d3.csv('data/ZayoHackathonData_CPQs.csv', function(data) {
 			    	  .orient('bottom');
     var xAxisG = svg.append('g')
 			    	.attr('class','axis')
-			    	.attr('transform','translate('+ xOffset +', '+ ( height - yOffset) +')')
+			    	.attr('transform','translate('+ (xOffset+30) +', '+ ( height - yOffset) +')')
 			    	.call(xAxis);
+
+	// var xLabel = svg.append("text")
+ //                    .attr('class', 'label')
+ //                    .attr('x', width/2)
+ //                    .attr( 'transform', 'translate(0, ' + (height) + ')' )
+ //                    .style("font-size", "18px")  
+ //                    .text("Product Group");
 
     var yAxis = d3.svg.axis()
 			    	  .scale(yScale)
@@ -227,8 +238,15 @@ d3.csv('data/ZayoHackathonData_CPQs.csv', function(data) {
 			    	  .ticks(10);
     var yAxisG = svg.append('g')
 			    	.attr('class', 'axis')
-			    	.attr('transform', 'translate(' + (xOffset) + ',0)')
+			    	.attr('transform', 'translate(' + (xOffset + 30) + ',10)')
 			    	.call(yAxis);
+
+	// var yLabel = svg.append("text")
+ //                    .attr('class', 'label')
+ //                    .attr( 'transform', 'translate(' + (xOffset/2-90) + ')')
+ //                    .attr('y', height/2)
+ //                    .style("font-size", "18px")
+ //                    .text("36 Month NPV");
 
 	var title = d3.select( '#title' ).append( 'text' )
                   .style( 'font-size', '40px' )
@@ -253,7 +271,7 @@ d3.csv('data/ZayoHackathonData_CPQs.csv', function(data) {
        			 .attr( 'height', function( d ){ return height - yScale(d['X36 NPV List']) - xOffset; } )//d['X36 NPV List']) - yOffset
 		         .attr( 'width', 75)
 		         .attr( 'y', function(d){ return yScale(d['X36 NPV List']) + yOffset + 20; } )
-		         .attr( 'x', function( d ){ return xScale(d['Product Group']) + xOffset + 20; } )
+		         .attr( 'x', function( d ){ return xScale(d['Product Group']) + xOffset + 50; } )
 		         .style('fill', 'blue')
 		         .on( 'mouseover', tooltip.show )
 		         .on( 'mouseout', tooltip.hide )
@@ -276,21 +294,22 @@ d3.csv('data/ZayoHackathonData_Services.csv', function(data){
 
 	servicesData = _.map( servicesData, function(d){
       return {
-        'Account ID': d['Account ID'],
+        'Account_ID': d['Account ID'],
         'Product_Group': d['Product Group'],
-        ' Total MRR ': parseFloat(Number(d[' Total MRR '].replace(/[^0-9\.]+/g,"")))
+        'Total_MRR': parseFloat(Number(d[' Total MRR '].replace(/[^0-9\.]+/g,"")))
       }
     });
 
-    servicesData = _.mapKeys( servicesData, function( d ){
-      return d['Product_Group'];
-    });
+    var mrrbyGroup = d3.nest()
+    	.key(function(d){ return d.Product_Group;})
+    	.rollup(function(v){ return d3.sum(v, function(d){ return d.Total_MRR})})
+    	.entries(servicesData);
 
-    productMRRs = _(servicesData)
-    	.groupBy('Product_Group')
+    productMRRs = _(mrrbyGroup)
+    	.groupBy('key')
     	.map((val, key) => ({
     		'Product_Group': key,
-    		' Total MRR ': _.sumBy(val, ' Total MRR '),
+    		' Total MRR ': _.sumBy(val, 'values'),
     	})).value();
 
     var svg = d3.select( '#nonspatial2_2' ).append('svg:svg')
@@ -319,8 +338,15 @@ d3.csv('data/ZayoHackathonData_Services.csv', function(data){
 			    	  .orient('bottom');
     var xAxisG = svg.append('g')
 			    	.attr('class','axis')
-			    	.attr('transform','translate('+ xOffset +', '+ ( height - yOffset) +')')
+			    	.attr('transform','translate('+ (xOffset+30) +', '+ ( height - yOffset) +')')
 			    	.call(xAxis);
+
+	// var xLabel = svg.append("text")
+ //                    .attr('class', 'label')
+ //                    .attr('x', width/2)
+ //                    .attr( 'transform', 'translate(0, ' + (height) + ')' )
+ //                    .style("font-size", "18px")  
+ //                    .text("Product Group");
 
     var yAxis = d3.svg.axis()
 			    	  .scale(yScale)
@@ -328,8 +354,15 @@ d3.csv('data/ZayoHackathonData_Services.csv', function(data){
 			    	  .ticks(10);
     var yAxisG = svg.append('g')
 			    	.attr('class', 'axis')
-			    	.attr('transform', 'translate(' + (xOffset) + ',0)')
+			    	.attr('transform', 'translate(' + (xOffset+30) + ',10)')
 			    	.call(yAxis);
+
+	// var yLabel = svg.append("text")
+ //                    .attr('class', 'label')
+ //                    .attr( 'transform', 'translate(' + (xOffset/2-90) + ')')
+ //                    .attr('y', height/2)
+ //                    .style("font-size", "18px")
+ //                    .text("MRR");
 
 	var title = d3.select( '#title2' ).append( 'text' )
                   .style( 'font-size', '40px' )
@@ -354,7 +387,7 @@ d3.csv('data/ZayoHackathonData_Services.csv', function(data){
        			 .attr( 'height', function( d ){ return height - yScale(d[' Total MRR ']) - xOffset; } )//d['X36 NPV List']) - yOffset
 		         .attr( 'width', 75)
 		         .attr( 'y', function(d){ return yScale(d[' Total MRR ']) + yOffset + 20; } )
-		         .attr( 'x', function( d ){ return xScale(d['Product_Group']) + xOffset + 20; } )
+		         .attr( 'x', function( d ){ return xScale(d['Product_Group']) + xOffset + 50; } )
 		         .style('fill', 'red')
 		         .on( 'mouseover', tooltip.show )
 		         .on( 'mouseout', tooltip.hide )
