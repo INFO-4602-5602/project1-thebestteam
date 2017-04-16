@@ -10,163 +10,7 @@ var yOffset = 20;
 var margin = 10;
 
 d3.csv('data/ZayoHackathonData_CPQs.csv', function(data) {
-	var CPQdata = data
 	var CPQdata2 = data
-	var ethernetCPQData = data
-	var waveMetroCPQData = data
-	var IPCPQData = data
-	var zColoCPQData = data
-	var waveLongCPQData = data
-	var darkCPQData = data
-	var SONETCPQData = data
-	var videoCPQData = data
-	var cloudCPQData = data
-
-	//I have to do this for every product because I need to keep track of the account with the highest NPV value.
-
-	//Filtered by:
-	//ethernet
-	//CO
-	//non-empty NPV value
-	ethernetCPQData = _.filter(ethernetCPQData, function(d){
-		return d['X36 NPV List'] !== ' $-   ' && d['Product Group'] === 'Ethernet';
-	});
-
-	ethernetCPQData = _.map( ethernetCPQData, function(d){
-      return {
-        'Account ID': d['Account ID'],
-        'Product Group': d['Product Group'],
-        'X36 NPV List': parseFloat( d['X36 NPV List'] )
-      }
-    });
-
-    //Filtered by:
-    //wavelengths - metro
-    //CO
-    //non-empty NPV value
-    waveMetroCPQData = _.filter(waveMetroCPQData, function(d){
-		return d['X36 NPV List'] !== ' $-   ' && d['Product Group'] === 'Wavelengths - Metro';
-	});
-
-	waveMetroCPQData = _.map( waveMetroCPQData, function(d){
-      return {
-        'Account ID': d['Account ID'],
-        'Product Group': d['Product Group'],
-        'X36 NPV List': parseFloat( d['X36 NPV List'] )
-      }
-    });
-
-    //filtered by:
-    //IP
-    //CO
-    //non-empty NPV value
-    IPCPQData = _.filter(IPCPQData, function(d){
-		return d['X36 NPV List'] !== ' $-   ' && d['Product Group'] === 'IP Services';
-	});
-
-	IPCPQData = _.map( IPCPQData, function(d){
-      return {
-        'Account ID': d['Account ID'],
-        'Product Group': d['Product Group'],
-        'X36 NPV List': parseFloat( d['X36 NPV List'] )
-      }
-    });
-
-    //filtered by:
-    //zColo
-    //CO
-    //non-empty NPV value
-    zColoCPQData = _.filter(zColoCPQData, function(d){
-		return d['X36 NPV List'] !== ' $-   ' && d['Product Group'] === 'zColo';
-	});
-
-	zColoCPQData = _.map( zColoCPQData, function(d){
-      return {
-        'Account ID': d['Account ID'],
-        'Product Group': d['Product Group'],
-        'X36 NPV List': parseFloat( d['X36 NPV List'] )
-      }
-    });
-
-    //filtered by:
-    //wavelengths - long haul
-    //CO
-    //non-empty NPV value
-    waveLongCPQData = _.filter(waveLongCPQData, function(d){
-		return d['X36 NPV List'] !== ' $-   ' && d['Product Group'] === 'Wavelengths - Long Haul';
-	});
-
-	waveLongCPQData = _.map( waveLongCPQData, function(d){
-      return {
-        'Account ID': d['Account ID'],
-        'Product Group': d['Product Group'],
-        'X36 NPV List': parseFloat( d['X36 NPV List'] )
-      }
-    });
-
-    //filtered by:
-    //dark fiber
-    //CO
-    //non-empty NPV value
-    darkCPQData = _.filter(darkCPQData, function(d){
-		return d['X36 NPV List'] !== ' $-   ' && d['Product Group'] === 'Dark Fiber - Metro';
-	});
-
-	darkCPQData = _.map( darkCPQData, function(d){
-      return {
-        'Account ID': d['Account ID'],
-        'Product Group': d['Product Group'],
-        'X36 NPV List': parseFloat( d['X36 NPV List'] )
-      }
-    });
-
-    //filtered by:
-    //sonet
-    //CO
-    //non-empty NPV value
-    SONETCPQData = _.filter(SONETCPQData, function(d){
-		return d['X36 NPV List'] !== ' $-   ' && d['Product Group'] === 'SONET';
-	});
-
-	SONETCPQData = _.map( SONETCPQData, function(d){
-      return {
-        'Account ID': d['Account ID'],
-        'Product Group': d['Product Group'],
-        'X36 NPV List': parseFloat( d['X36 NPV List'] )
-      }
-    });
-
-    //filtered by:
-    //live video
-    //CO
-    //non-empty NPV value
-    videoCPQData = _.filter(videoCPQData, function(d){
-		return d['X36 NPV List'] !== ' $-   ' && d['Product Group'] === 'Live Video';
-	});
-
-	videoCPQData = _.map( videoCPQData, function(d){
-      return {
-        'Account ID': d['Account ID'],
-        'Product Group': d['Product Group'],
-        'X36 NPV List': parseFloat( d['X36 NPV List'] )
-      }
-    });
-
-    //filtered by:
-    //cloud
-    //CO
-    //non-empty NPV value
-    cloudCPQData = _.filter(cloudCPQData, function(d){
-		return d['X36 NPV List'] !== ' $-   ' && d['Product Group'] === 'Cloud';
-	});
-
-	cloudCPQData = _.map( cloudCPQData, function(d){
-      return {
-        'Account ID': d['Account ID'],
-        'Product Group': d['Product Group'],
-        'X36 NPV List': parseFloat( d['X36 NPV List'] )
-      }
-    });
 
     //generic to build the graph
 
@@ -182,19 +26,28 @@ d3.csv('data/ZayoHackathonData_CPQs.csv', function(data) {
       }
     });
 
+    // var npvbyGroup = d3.nest()
+    // 	.key(function(d){ return d.Product_Group;}).sortKeys(d3.ascending)
+    // 	.rollup(function(v){ return d3.sum(v, function(d){ return d.X36_NPV_List})})
+    // 	.entries(CPQdata2);
+
     var npvbyGroup = d3.nest()
-    	.key(function(d){ return d.Product_Group;})
-    	.rollup(function(v){ return d3.sum(v, function(d){ return d.X36_NPV_List})})
+    	.key(function(d){ return d.Product_Group;}).sortKeys(d3.ascending)
+    	.rollup(function(v){return{
+    		npvTotal: d3.sum(v, function(d){ return d.X36_NPV_List}),
+    		npvMax: d3.max(v, function(d){return d.X36_NPV_List})
+    	};})
     	.entries(CPQdata2);
+
+    console.log(npvbyGroup);
 
     productNPVs = _(npvbyGroup)
     	.groupBy('key')
     	.map((val, key) => ({
     		'Product Group': key,
-    		'X36 NPV List': _.sumBy(val, 'values'),
+    		'X36 NPV List': _.sumBy(val, 'values.npvTotal'),
+    		'Max NPV': _.result(val[0], 'values.npvMax'),
     	})).value();
-
-    console.log(productNPVs);
 
     var svg = d3.select( '#nonspatial2' ).append('svg:svg')
     			.attr('width', width)
@@ -282,6 +135,8 @@ d3.csv('data/ZayoHackathonData_CPQs.csv', function(data) {
 		                .text( d['X36 NPV List'] )
 		              d3.select( '#productgroup')
 		                .text( d['Product Group'] )
+		              d3.select('#maxnpv')
+		              	.text(d['Max NPV'])
 		             })
 });
 
@@ -301,7 +156,7 @@ d3.csv('data/ZayoHackathonData_Services.csv', function(data){
     });
 
     var mrrbyGroup = d3.nest()
-    	.key(function(d){ return d.Product_Group;})
+    	.key(function(d){ return d.Product_Group;}).sortKeys(d3.ascending)
     	.rollup(function(v){ return d3.sum(v, function(d){ return d.Total_MRR})})
     	.entries(servicesData);
 
@@ -366,7 +221,7 @@ d3.csv('data/ZayoHackathonData_Services.csv', function(data){
 
 	var title = d3.select( '#title2' ).append( 'text' )
                   .style( 'font-size', '40px' )
-                  .text( 'Current Revenue Per Product Group' );
+                  .text( 'Current Monthly Recurring Revenue Per Product Group' );
 
     var tooltip = d3.tip()
                     .attr( 'class', 'tooltip' )
@@ -375,7 +230,7 @@ d3.csv('data/ZayoHackathonData_Services.csv', function(data){
                       var npv = d[' Total MRR '];
                       npv = npv.toLocaleString('en-US', {minimumFractionDigits: 2});
                       return (
-                        "<strong>NPV:</strong> <span>$" + npv + "</span>"
+                        "<strong>MRR:</strong> <span>$" + npv + "</span>"
                       );
                     } );
     svg.call( tooltip );
@@ -399,35 +254,4 @@ d3.csv('data/ZayoHackathonData_Services.csv', function(data){
 		              d3.select( '#productgroup2')
 		                .text( d['Product_Group'] )
 		             })
-});
-
-d3.csv('data/ZayoHackathonData_CPQs.csv', function(dataCPQ){
-	d3.csv('data/ZayoHackathonData_Services.csv', function(dataServices){
-		var CPQdata = dataCPQ;
-		var servicesData = dataServices;
-
-		servicesData = _.filter(servicesData, function(d){
-			return ((d[' Total MRR '] !== ' $-   ') && (d['Product Group'] === 'Ethernet' || d['Product Group'] === 'Wavelengths - Metro' || d['Product Group'] === 'IP Services' || d['Product Group'] === 'Wavelengths - Long Haul' || d['Product Group'] === 'zColo' || d['Product Group'] === 'Dark Fiber - Metro' || d['Product Group'] === 'SONET' || d['Product Group'] === 'Cloud' || d['Product Group'] === 'Live Video'));
-		});
-
-		servicesData = _.map( servicesData, function(d){
-	      return {
-	        'Product_Group': d['Product Group'],
-	        'Total MRR': parseFloat(Number(d[' Total MRR '].replace(/[^0-9\.]+/g,"")))
-	      }
-	    });
-
-	    //console.log(servicesData);
-
-	    CPQdata = _.filter(CPQdata, function(d){
-			return d['X36 NPV List'] !== ' $-   ';
-		});	
-
-		CPQdata = _.map( CPQdata, function(d){
-	      return {
-	        'Product Group': d['Product Group'],
-	        'X36 NPV List': parseFloat(Number(d['X36 NPV List'].replace(/[^0-9\.]+/g,"")))
-	      }
-	    });
-	});
 });
