@@ -234,6 +234,18 @@ d3.csv('data/ZayoHackathonData_CPQs.csv', function(data) {
                   .style( 'font-size', '40px' )
                   .text( 'Possible Revenue Per Product Group' );
 
+    var tooltip = d3.tip()
+                    .attr( 'class', 'tooltip' )
+                    .offset([-10, 0])
+                    .html( function( d ){
+                      var npv = d['X36 NPV List'];
+                      npv = npv.toLocaleString('en-US', {minimumFractionDigits: 2});
+                      return (
+                        "<strong>NPV:</strong> <span>$" + npv + "</span>"
+                      );
+                    } );
+    svg.call( tooltip );
+
     var bar = svg.selectAll( 'rect' )
                  .data( productNPVs )
                  .enter()
@@ -242,7 +254,17 @@ d3.csv('data/ZayoHackathonData_CPQs.csv', function(data) {
 		         .attr( 'width', 75)
 		         .attr( 'y', function(d){ return yScale(d['X36 NPV List']) + yOffset + 20; } )
 		         .attr( 'x', function( d ){ return xScale(d['Product Group']) + xOffset + 20; } )
-		         .style('fill', 'blue');
+		         .style('fill', 'blue')
+		         .on( 'mouseover', tooltip.show )
+		         .on( 'mouseout', tooltip.hide )
+		         .on( 'click', function( d ){
+		              d3.selectAll( '.bar' )
+		                 .classed( 'active', false )
+		              d3.select( '#npv' )
+		                .text( d['X36 NPV List'] )
+		              d3.select( '#productgroup')
+		                .text( d['Product Group'] )
+		             })
 });
 
 d3.csv('data/ZayoHackathonData_Services.csv', function(data){
@@ -313,6 +335,18 @@ d3.csv('data/ZayoHackathonData_Services.csv', function(data){
                   .style( 'font-size', '40px' )
                   .text( 'Current Revenue Per Product Group' );
 
+    var tooltip = d3.tip()
+                    .attr( 'class', 'tooltip' )
+                    .offset([-10, 0])
+                    .html( function( d ){
+                      var npv = d[' Total MRR '];
+                      npv = npv.toLocaleString('en-US', {minimumFractionDigits: 2});
+                      return (
+                        "<strong>NPV:</strong> <span>$" + npv + "</span>"
+                      );
+                    } );
+    svg.call( tooltip );
+
     var bar = svg.selectAll( 'rect' )
                  .data( productMRRs )
                  .enter()
@@ -321,7 +355,17 @@ d3.csv('data/ZayoHackathonData_Services.csv', function(data){
 		         .attr( 'width', 75)
 		         .attr( 'y', function(d){ return yScale(d[' Total MRR ']) + yOffset + 20; } )
 		         .attr( 'x', function( d ){ return xScale(d['Product_Group']) + xOffset + 20; } )
-		         .style('fill', 'red');
+		         .style('fill', 'red')
+		         .on( 'mouseover', tooltip.show )
+		         .on( 'mouseout', tooltip.hide )
+		         .on( 'click', function( d ){
+		              d3.selectAll( '.bar' )
+		                 .classed( 'active', false )
+		              d3.select( '#mrr' )
+		                .text( d[' Total MRR '] )
+		              d3.select( '#productgroup2')
+		                .text( d['Product_Group'] )
+		             })
 });
 
 d3.csv('data/ZayoHackathonData_CPQs.csv', function(dataCPQ){
@@ -329,6 +373,28 @@ d3.csv('data/ZayoHackathonData_CPQs.csv', function(dataCPQ){
 		var CPQdata = dataCPQ;
 		var servicesData = dataServices;
 
-		
+		servicesData = _.filter(servicesData, function(d){
+			return ((d[' Total MRR '] !== ' $-   ') && (d['Product Group'] === 'Ethernet' || d['Product Group'] === 'Wavelengths - Metro' || d['Product Group'] === 'IP Services' || d['Product Group'] === 'Wavelengths - Long Haul' || d['Product Group'] === 'zColo' || d['Product Group'] === 'Dark Fiber - Metro' || d['Product Group'] === 'SONET' || d['Product Group'] === 'Cloud' || d['Product Group'] === 'Live Video'));
+		});
+
+		servicesData = _.map( servicesData, function(d){
+	      return {
+	        'Product_Group': d['Product Group'],
+	        'Total MRR': parseFloat(Number(d[' Total MRR '].replace(/[^0-9\.]+/g,"")))
+	      }
+	    });
+
+	    //console.log(servicesData);
+
+	    CPQdata = _.filter(CPQdata, function(d){
+			return d['X36 NPV List'] !== ' $-   ';
+		});	
+
+		CPQdata = _.map( CPQdata, function(d){
+	      return {
+	        'Product Group': d['Product Group'],
+	        'X36 NPV List': parseFloat(Number(d['X36 NPV List'].replace(/[^0-9\.]+/g,"")))
+	      }
+	    });
 	});
 });
