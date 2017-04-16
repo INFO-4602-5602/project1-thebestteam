@@ -1,0 +1,13 @@
+#map {
+  width: 600px;
+  height: 400px;
+  float: left;
+}
+
+#legend {
+  float: left;
+}
+
+#title {
+  margin-bottom: 30px;
+}

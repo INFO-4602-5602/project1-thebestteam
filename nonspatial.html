@@ -4,9 +4,13 @@
   <meta charset="utf-8">
   <meta name="viewport"
      content="width=device-width, initial-scale=1, user-scalable=yes">
+
+  <!-- CSS & Fonts -->
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="css/nonspatial.css"></link>
-  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- JS -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
   <script src="https://d3js.org/d3.v3.min.js"></script>
@@ -30,6 +34,9 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                   <li>
+                      <a href="/">Home</a>
+                  </li>
+                  <li>
                     <a href="spatial.html">Spatial</a>
                   </li>
                   <li>
@@ -43,27 +50,25 @@
         </div> <!-- end container -->
     </nav>
 
-    <div class="container-fluid" align="center">
+    <div id="wrapper" class="container-fluid" align="center">
       <div class="row">
-          <h1 id="title"></h1>
+          <h1>Possible Revenue per Building</h1>
+          <p id="subtitle">The data has been filtered to display the highest-NPV buildings in Colorado, where the NPV is 36-month revenue from CPQs.</p>
       </div>
       <div class="row">
-          <div class="col-md-2">
+          <div class="col-md-3">
             <div id="legend">
-              <div id="#info">
-                <header>
-                  <h3>This visualization displays the Revenue per 36 months per CPQ, grouped by Building.</h3>
-                  <h4>Click on a bar for additional information</p>
-                </header>
-                <p><b>Selected Building ID</b> &nbsp;&nbsp; <span id="building"></span></p>
-                <p><b>Possible Revenue by NPV</b> &nbsp;&nbsp; <span id="npv"></span></p>
-                <p><b>Product Group</b> &nbsp;&nbsp; <span id="productgroup"></span></p>
-                <p><b>City</b> &nbsp;&nbsp; <span id="city"></span></p>
-              </div>
             </div>
-
+            <div id="info" class="text-left">
+              <h4>Click on a bar for additional information</p>
+              <p><b>Selected Building ID</b> &nbsp;&nbsp; <span id="building"></span></p>
+              <p><b>Possible Revenue by NPV</b> &nbsp;&nbsp; <span id="npv"></span></p>
+              <p><b>Number of Accounts</b> &nbsp;&nbsp; <span id="accounts"></span></p>
+              <p><b>Product Group</b> &nbsp;&nbsp; <span id="productgroup"></span></p>
+              <p><b>City</b> &nbsp;&nbsp; <span id="city"></span></p>
+            </div>
           </div>
-          <div class="col-md-10">
+          <div class="col-md-8">
             <div id="nonspatial"></div>
           </div>
       </div>

@@ -3,7 +3,7 @@ html, body, h1, h2, h3, p, span, text, label, div {
 }
 
 p {
-  font-size: 16px;
+  font-size: 15.6px;
 }
 
 /* Axes */
@@ -34,6 +34,12 @@ p {
 /* Info */
 #info {
   margin-bottom: 30px;
+}
+#subtitle {
+  margin-bottom: 30px;
+}
+#wrapper {
+  margin: 30px;
 }
 
 /* Tooltips */
