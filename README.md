@@ -15,6 +15,7 @@ Include information about interactions as appropriate.
 This is a map of Colorado Zayo Buildings and each of their respective products, color mapped. 
 
 ### Non-Spatial
+The barchart displays the CPQ NPVs across buildings, using color to represent whether the building is already on the Zayo network or not. Interactions include detailed NPV information on hover, and each bar can be clicked to reveal detailed information about that particular building.
 
 ### Elias
 
