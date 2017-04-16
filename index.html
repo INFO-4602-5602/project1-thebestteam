@@ -3,7 +3,13 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport"
-     content="width=device-width, initial-scale=1, user-scalable=yes">
+        content="width=device-width, initial-scale=1, user-scalable=yes">
+
+  <!-- CSS & Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="css/main.css"></link>
+
+  <!-- JS Libraries -->
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
@@ -37,10 +43,85 @@
             </div>
         </div>
     </nav>
+    <div class="container" align="center">
+      <h1>Zayo Data Analysis</h1>
+      <section>
+        <p>
+          <strong>The Best Team:</strong> Taylor M., Elias, Dan N., Sigrunn, Caleb
+        </p>
+      </section>
+    </div>
     <div class="container">
-      <h1>Project 1</h1>
-      <h2>Taylor M., Elias, Dan N., Sigrunn, Chia Lo</h2>
-      Homepage
+      <section>
+        <h2 align="center">Roles</h2>
+        <ul>
+          <li><strong>Spatial: </strong>Dan, Taylor</li>
+          <li><strong>Non-Spatial: </strong>Caleb, Sigrunn</li>
+          <li><strong>Non-Spatial #2: </strong>Elias</li>
+        </ul>
+      </section>
+      <section>
+        <h2 align="center">Visualizations</h2>
+        <h4>Spatial</h4>
+        <p>A map of Colorado Zayo Buildings and each of their respective products, color mapped.</p>
+
+        <h4>Non-Spatial</h4>
+        <p>A barchart displays the CPQ NPVs across buildings, using color to represent whether the building
+          is already on the Zayo network or not. Interactions include detailed NPV information on hover, and
+          each bar can be clicked to reveal detailed information about that particular building.
+        </p>
+
+        <h4>Non-Spatial #2</h4>
+        <p>A visualization that compares how much money Zayo is currently making per product group and how much
+           money they could be making per product group.
+        </p>
+      </section>
+      <section>
+        <h2 align="center">Design Process</h2>
+        <h4>Spatial</h4>
+        <p>
+          We first created a prototype using pen and paper. We knew that we wanted to represent a region using the
+          coordinates given to us by Zayo, and map it to another attribute in the data set that could show meaning.
+          We first used D3.js as a starting point for our map, but after some trial and error, we found that D3 doesn't do a lot for you.
+          Although D3 is a very powerful visualization tool, it is desinged for customization and has a steep learning curve.
+        </p>
+        <p>Caleb suggested a different visualization library called Leaflet.js</p>
+        <p>This is an open-source Javascript library for creating mobile-friendly interactive maps.</p>
+        <p>
+          We chose to represent industry of building with color and we plotted them within the Denver scope. We chose to zoom
+          into this level because plotting all these points to show all regions of the data from GA, CO, and TX wouldn't be beneficial
+          because it would be too zoomed out to recognize any discernable patterns.
+        </p>
+
+        <h4>Non-Spatial</h4>
+        <p>
+          We began exploring the data by loading it into a WSYWIG tool (Tableau) to see what attributes were available to us
+          across the datasets. After gaining a better understanding of the data Zayo more interested in, we were able to narrow
+          down the datasets we wanted to use and how we wanted to group and display the data.
+        </p>
+        <p>
+          Because the bar chart is built with D3, part of the refining process came naturally as a result of better
+          understanding how D3 works and what it is capable of. After building the basic bar chart, we narrowed
+          down some data attributes that Zayo finds compelling and decided to integrate them into our vis through
+          interaction. Like Dan and Taylor, we narrowed the results to the state of Colorado in order to better
+          display some of the high-value CPQs that Zayo should be concerned with.
+        </p>
+
+        <h4>Non-Spatial #2</h4>
+        <p>
+          At first I was looking through the data given to us and kept in mind that I want to show as much
+          business insight as possible. I wanted an easy to "read" or easy to understand representation.
+          One where the user (Zayo) could easily get all the necessary details in order to execute a plan
+          in order to maximize profits.
+        </p>
+        <p>
+          I was thinking that a pie chart would work best here, at first. After some thought I decided
+          that a bar graph would still be best to use. Some product groups like SONET and zColo would get
+          too overshadowed by the other products that when put onto a pie chart, it would be really hard to
+          see. In a bar chart however, you can clearl see the differences between the product groups. I was
+          thinking about narrowing down the data to just CO as well but then I decided to just take in all the data.
+        </p>
+      </section>
     </div>
 </body>
 </html>

@@ -1,0 +1,17 @@
+html, body, h1, h2, h3, p, span, text, label, div {
+  font-family: 'Open Sans', sans-serif;
+}
+
+h4 {
+  color: rgb(0, 81, 107) !important;
+  font-weight: 600 !important;
+  margin-top: 22px !important;
+}
+
+p, ul, li {
+  font-size: 15.6px;
+}
+
+section {
+  margin-bottom: 50px;
+}
