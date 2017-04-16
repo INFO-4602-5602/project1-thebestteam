@@ -125,7 +125,7 @@ d3.csv('data/ZayoHackathonData_CPQs.csv', function(data) {
 		         .attr( 'width', 75)
 		         .attr( 'y', function(d){ return yScale(d['X36 NPV List']) + yOffset + 20; } )
 		         .attr( 'x', function( d ){ return xScale(d['Product Group']) + xOffset + 50; } )
-		         .style('fill', 'blue')
+		         .style('fill', 'green')
 		         .on( 'mouseover', tooltip.show )
 		         .on( 'mouseout', tooltip.hide )
 		         .on( 'click', function( d ){
@@ -243,7 +243,7 @@ d3.csv('data/ZayoHackathonData_Services.csv', function(data){
 		         .attr( 'width', 75)
 		         .attr( 'y', function(d){ return yScale(d[' Total MRR ']) + yOffset + 20; } )
 		         .attr( 'x', function( d ){ return xScale(d['Product_Group']) + xOffset + 50; } )
-		         .style('fill', 'red')
+		         .style('fill', 'green')
 		         .on( 'mouseover', tooltip.show )
 		         .on( 'mouseout', tooltip.hide )
 		         .on( 'click', function( d ){
