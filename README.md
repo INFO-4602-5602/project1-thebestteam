@@ -54,3 +54,7 @@ $ cd project1-thebestteam
 ```
 
 Use your favorite local server to host the directory locally. If you have Brackets installed, live preview ```index.html``` or if you have Python installed, use ```python -m SimpleHTTPServer 3000``` and go to your web browser and direct it to ```localhost:3000/index.html```
+
+
+## Live Site
+[Here](http://creative.colorado.edu/~tamo1864/project1-thebestteam/nonspatial.html)
